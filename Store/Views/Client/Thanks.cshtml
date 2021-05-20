@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<!-- Представление благодарности -->
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> Благодарность </title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <style>
+        body {
+            background: #f1f1f1;
+        }
+
+        h1 {
+            margin-top: 17.5%;
+        }
+
+        .btn a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="text-center">
+        <h1> Спасибо, @Model.Name! </h1>
+        <br /> В ближайшее время мы отправим ваш заказ.
+        <br />
+        <div class="btn btn-sm btn-warning" style="margin-top: 3.5%;">
+            @Html.ActionLink("Вернуться на главную страницу", "../Product/Index")
+        </div>
+    </div>
+</body>
+</html>

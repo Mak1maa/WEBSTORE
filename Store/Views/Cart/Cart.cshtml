@@ -1,0 +1,113 @@
+﻿@model Store.Models.Cart
+
+@{
+    ViewBag.Title = "Корзина";
+}
+
+<!-- Представление корзины. Вывод кол-ва, цены, описания, названия, итоговую сумму оплаты.
+    Кнопка удаления из корзины. Поле ввода кол-ва товара. Кнопка перехода на страницу оформления. -->
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> Корзина </title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <style>
+        .btn a {
+            color: white;
+            text-decoration: none;
+        }
+
+        body {
+            background-color: #F1F1F1;
+        }
+
+        h2 {
+            margin-top: 16.5%;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Интернет-магазин различных вещей",
+               "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="text-right" style="margin-top: 8px">
+                <div class="btn btn-success">
+                    @Html.ActionLink("Вернуться на главную", "../Product/Index")
+                </div>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <table class="table" style="margin-top: 50px;">
+        <thead>
+            <tr>
+                <th> Кол-во </th>
+                <th> Товар </th>
+                <th> Описание </th>
+                <th class="text-right"> Цена </th>
+                <th class="text-center"> Действия </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.Lines)
+            {
+                <tr>
+                    <td class="text-left">
+                        @line.Quantity
+                    </td>
+                    <td class="text-left">@line.Product.Name</td>
+                    <td class="text-left">@line.Product.Description</td>
+                    <td class="text-right">@line.Product.Price.ToString("C")</td>
+                    <td class="text-center" width="400">
+                        @using (Html.BeginForm("RemoveFromCart", "Cart", FormMethod.Post))
+                        {
+                            @Html.ValidationSummary()
+                            @Html.Hidden("ProductID", line.Product.ProductID)
+                            <input class="btn btn-sm btn-warning" type="submit"
+                                   value="Удалить" style="margin-top: -10px;" />
+                        }
+
+                        @using (Html.BeginForm("Edit", "Cart", FormMethod.Post))
+                        {
+                            @Html.ValidationSummary()
+                            @Html.Hidden("ProductID", line.Product.ProductID)
+                            @Html.TextBox("quantity", "")
+                            <input class="btn btn-sm btn-warning"
+                                   type="submit" value="Изменить кол-во" style="margin-top: -5px; margin-bottom: -3px;" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-left"> Итого: </td>
+                <td class="text-right">
+                    @Model.TotalPrice().ToString("C")
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="text-left">
+        <div class="btn btn-success">
+            @Html.ActionLink("Оформить заказ", "../Client/ClientForm")
+        </div>
+    </div>
+</body>
+</html>

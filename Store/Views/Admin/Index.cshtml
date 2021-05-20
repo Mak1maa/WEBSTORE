@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Администратор";
+}
+
+<!-- Представление панели администратора. Переходы на добавление, редактирование товаров, 
+    а так же просмотр сделанных заказов. -->
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> Администратор </title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <style>
+        .btn a {
+            color: white;
+            text-decoration: none;
+        }
+
+        body {
+            background-color: #F1F1F1;
+        }
+
+        h2 {
+            margin-top: 16.5%;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Интернет-магазин различных вещей",
+               "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            @using (Html.BeginForm("LogOut", "Admin", FormMethod.Post))
+            {
+                <div class="text-right">
+                    <input class="btn btn-success" type="submit" value="Выйти" style="margin-top: 8px;" />
+                </div>
+            }
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-left">
+        <div class="btn btn-success" style="margin-top: 50px;">@Html.ActionLink("Редактировать товары", "../Admin/EditProductView")</div>
+
+        <div class="btn btn-success" style="margin-top: 50px;">@Html.ActionLink("Добавление товара", "../Admin/AddProductForm")</div>
+
+        <div class="btn btn-success" style="margin-top: 50px;">@Html.ActionLink("Просмотреть заказы", "../Client/ClientView")</div>
+    </div>
+</body>
+</html>
